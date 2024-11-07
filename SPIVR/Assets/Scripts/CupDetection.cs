@@ -6,7 +6,7 @@ public class CupDetection : MonoBehaviour
 {
     [SerializeField] private float coffeTime;
 
-    private float timeToMake;
+    [SerializeField] private float timeToMake;
 
     private bool startProcess;
 
@@ -28,6 +28,7 @@ public class CupDetection : MonoBehaviour
             if (timeToMake > coffeTime)
             {
                 cupInteractable.enabled = true;
+                startProcess = false;
             }
         }
 
@@ -44,6 +45,7 @@ public class CupDetection : MonoBehaviour
             {
                 cupInteractable.transform.position = transform.position;
                 cupInteractable.enabled = false;
+                startProcess = true;
             }
         }
     }
