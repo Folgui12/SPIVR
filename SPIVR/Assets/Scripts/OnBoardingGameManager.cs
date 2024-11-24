@@ -39,8 +39,6 @@ public class OnBoardingGameManager : MonoBehaviour
 
     private void Start()
     {
-        pjController = Player.GetComponent<CharacterController>();
-        pjController.enabled = false;
         Source.clip = IntroAudio;
         Source.Play();
         IntroAudioPlaying = false;
@@ -65,11 +63,6 @@ public class OnBoardingGameManager : MonoBehaviour
         {
             
         }
-    }
-
-    public void FirstGrab()
-    {
-
     }
 
     public void FirstRotationsDone()

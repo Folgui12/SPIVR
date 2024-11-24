@@ -5,15 +5,15 @@ using UnityEngine;
 public class FollowLogo : MonoBehaviour
 {
     [SerializeField] private SirenBehaviour Siren;
-    public float fullTime;
 
     private RaycastHit hit;
 
     private SirenBehaviour sirenAux;
+    private bool firstTimeWatchingSiren;
 
     private void Start()
     {
-
+        firstTimeWatchingSiren = false;
     }
 
     // Update is called once per frame
@@ -23,6 +23,12 @@ public class FollowLogo : MonoBehaviour
         {
             if (hit.collider.gameObject.layer == 6)
             {
+                if(!firstTimeWatchingSiren)
+                {
+                    SpeakerManger.Instance.FirstTimeWatchingSiren();
+                    firstTimeWatchingSiren = true;
+                }
+
                 sirenAux = hit.collider.GetComponent<SirenBehaviour>();
 
                 if(sirenAux.GetInstanceID() == Siren.GetInstanceID())
@@ -31,10 +37,23 @@ public class FollowLogo : MonoBehaviour
                 }
             }
             else
+            {
                 Siren.canMove = false;
+                if(AudioManager.Instance.PublicSource.isPlaying)
+                {
+                    AudioManager.Instance.PublicSource.Stop();
+                }
+            }
+                
         }
-        else
-                Siren.canMove = false;
+        else if(Siren != null && Siren.TravelPointsIndexRef < 5)
+        {
+            Siren.canMove = false;
+            if(AudioManager.Instance.PublicSource.isPlaying)
+            {
+                AudioManager.Instance.PublicSource.Stop();
+            }
+        }
     }
 
     private void OnDrawGizmos()
