@@ -11,6 +11,8 @@ public class SpeakerManger : MonoBehaviour
     private SirenBehaviour sirenMovement;
     private bool firstTimePuttingCupInMachine;
     private bool firstTimeUsingCoffeMachine;
+    private bool firstCupOffMachine;
+    private bool firsTimeGrabbingJar;
 
     void Awake()
     {
@@ -31,6 +33,8 @@ public class SpeakerManger : MonoBehaviour
         StartCoroutine("SirenIntro");
         firstTimePuttingCupInMachine = false;
         firstTimeUsingCoffeMachine = false;
+        firstCupOffMachine = true;
+        firsTimeGrabbingJar = true;
     }
 
     // Update is called once per frame
@@ -65,6 +69,8 @@ public class SpeakerManger : MonoBehaviour
 
         // Primera instrucción
         speaker.Play();
+
+        yield return new WaitForSeconds(speaker.clip.length);
 
         sirenMovement.enabled = true;
         sirenMovement.gameObject.GetComponent<Collider>().enabled = true;
@@ -118,5 +124,19 @@ public class SpeakerManger : MonoBehaviour
             PlayNextSound();
             firstTimeUsingCoffeMachine = true;
         }
+    }
+
+    public void GrabCupOfCoffeFromMachine()
+    {
+        if(firstCupOffMachine)
+        {
+            PlayNextSound();
+            firstCupOffMachine = false;
+        }
+    }
+
+    public void CoffeReady()
+    {
+        PlayNextSound();
     }
 }

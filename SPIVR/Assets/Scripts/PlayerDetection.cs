@@ -7,6 +7,7 @@ public class PlayerDetection : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             SpeakerManger.Instance.PlayerPickUpCup();
+            GetComponent<Collider>().enabled = false;
         }
     }
 }

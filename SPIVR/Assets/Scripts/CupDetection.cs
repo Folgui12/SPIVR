@@ -12,6 +12,10 @@ public class CupDetection : MonoBehaviour
     [SerializeField] private List<GameObject> Lights;
 
     [SerializeField] private AudioClip machineWorking;
+    [SerializeField] private AudioClip ButtonPress;
+    [SerializeField] private AudioClip LiquidPouring;
+    [SerializeField] private AudioClip CupInMachine;
+    [SerializeField] private AudioClip CoffeReady;
 
     private bool startProcess;
 
@@ -19,10 +23,13 @@ public class CupDetection : MonoBehaviour
 
     private bool canPlaceCups;
 
+    private bool cupFullOfCoffe;
+
     // Start is called before the first frame update
     void Start()
     {
-        canPlaceCups = false;
+        canPlaceCups = true;
+        cupFullOfCoffe = false;
     }
 
     // Update is called once per frame
@@ -43,9 +50,13 @@ public class CupDetection : MonoBehaviour
 
     public void StartProcess()
     {
-        startProcess = true;
-        AudioManager.Instance.PlayOneShot(machineWorking);
-        ChangeLights(2);
+        if(!canPlaceCups)
+        {
+            startProcess = true;
+            AudioManager.Instance.PlayOneShot(machineWorking);
+            ChangeLights(2);
+        }
+        
     }
 
     public void ProcessFinish()
@@ -62,21 +73,21 @@ public class CupDetection : MonoBehaviour
         switch (state)
         {
             case 1:
-                Lights[0].GetComponent<MeshRenderer>().material.color = new Color(1f, .65f, .65f);
+                Lights[0].GetComponent<MeshRenderer>().material.color = new Color(1f, 0f, 0f);
                 Lights[1].GetComponent<MeshRenderer>().material.color = new Color(.65f, .65f, .65f);
                 Lights[2].GetComponent<MeshRenderer>().material.color = new Color(.65f, .65f, .65f);
                 break;
 
             case 2:
                 Lights[0].GetComponent<MeshRenderer>().material.color = new Color(.65f, .65f, .65f);
-                Lights[1].GetComponent<MeshRenderer>().material.color = new Color(1f, 1f, .65f);
+                Lights[1].GetComponent<MeshRenderer>().material.color = new Color(1f, 1f, 0f);
                 Lights[2].GetComponent<MeshRenderer>().material.color = new Color(.65f, .65f, .65f);
                 break;
 
             case 3:
                 Lights[0].GetComponent<MeshRenderer>().material.color = new Color(.65f, .65f, .65f);
                 Lights[1].GetComponent<MeshRenderer>().material.color = new Color(.65f, .65f, .65f);
-                Lights[2].GetComponent<MeshRenderer>().material.color = new Color(.65f, 1f, .65f);
+                Lights[2].GetComponent<MeshRenderer>().material.color = new Color(0f, 1f, 0f);
                 break;
 
             default:
@@ -86,10 +97,15 @@ public class CupDetection : MonoBehaviour
 
     IEnumerator EndProcess()
     {
-        yield return new WaitForSeconds(1.5f);
+        AudioManager.Instance.PlayOneShot(LiquidPouring);
+
+        yield return new WaitForSeconds(AudioManager.Instance.PublicSource.clip.length);
+
+        AudioManager.Instance.PlayOneShot(CoffeReady);
 
         ChangeLights(1);
         canPlaceCups = true;
+        cupFullOfCoffe = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -102,10 +118,20 @@ public class CupDetection : MonoBehaviour
             if (!cupOnHand.OnHand)
             {
                 SpeakerManger.Instance.PlayerPutCupInMachine();
+                AudioManager.Instance.PlayOneShot(CupInMachine);
                 cupInteractable.transform.position = transform.position;
                 cupInteractable.enabled = false;
                 canPlaceCups = false;
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Cup") && cupFullOfCoffe)
+        {
+            other.GetComponent<HandDetection>().CoffeReadyToClose = true;
+            SpeakerManger.Instance.GrabCupOfCoffeFromMachine();
         }
     }
 

@@ -28,7 +28,7 @@ public class SirenBehaviour : MonoBehaviour
             if(transform.position == TravelPoints[travelPointsIndex].position)
                 travelPointsIndex++;
             else
-                transform.position = Vector3.MoveTowards(transform.position, TravelPoints[travelPointsIndex].position, 0.003f);
+                transform.position = Vector3.MoveTowards(transform.position, TravelPoints[travelPointsIndex].position, 0.03f);
 
             if(!AudioManager.Instance.PublicSource.isPlaying)
             {
