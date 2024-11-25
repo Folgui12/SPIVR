@@ -27,4 +27,12 @@ public class HandDetection : MonoBehaviour
     {
         OnHand = false;
     }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("WorkTable"))
+        {
+            OnBoardingGameManager.Instance.PickedCup();
+        }
+    }
 }

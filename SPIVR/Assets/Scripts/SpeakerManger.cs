@@ -5,13 +5,12 @@ using UnityEngine;
 public class SpeakerManger : MonoBehaviour
 {
     public static SpeakerManger Instance;
-
     [SerializeField] private List<AudioClip> Audios;
     private AudioSource speaker;  
     private int audiosIndex;
     private SirenBehaviour sirenMovement;
-
-    private bool firstAudioCue;
+    private bool firstTimePuttingCupInMachine;
+    private bool firstTimeUsingCoffeMachine;
 
     void Awake()
     {
@@ -29,7 +28,9 @@ public class SpeakerManger : MonoBehaviour
         sirenMovement.gameObject.GetComponent<Collider>().enabled = false;
         speaker = GetComponent<AudioSource>();
         audiosIndex = 0;
-        StartCoroutine("SirenIntro"); 
+        StartCoroutine("SirenIntro");
+        firstTimePuttingCupInMachine = false;
+        firstTimeUsingCoffeMachine = false;
     }
 
     // Update is called once per frame
@@ -71,6 +72,8 @@ public class SpeakerManger : MonoBehaviour
 
     public void PlayNextSound()
     {
+        Debug.Log(audiosIndex);
+
         audiosIndex++;
 
         speaker.clip = Audios[audiosIndex];
@@ -86,6 +89,7 @@ public class SpeakerManger : MonoBehaviour
     public void IntroWorkArea()
     {
         PlayNextSound();
+        OnBoardingGameManager.Instance.ActivateController(); 
     }
 
     public void PlayerCloseToDesk()
@@ -95,11 +99,24 @@ public class SpeakerManger : MonoBehaviour
 
     public void PlayerPickUpCup()
     {
-        
+        PlayNextSound();
     }
 
     public void PlayerPutCupInMachine()
     {
-        
+        if(!firstTimePuttingCupInMachine)
+        {
+            PlayNextSound();
+            firstTimePuttingCupInMachine = true;
+        }
+    }
+
+    public void TurnOnCoffeMachine()
+    {
+        if(!firstTimeUsingCoffeMachine)
+        {
+            PlayNextSound();
+            firstTimeUsingCoffeMachine = true;
+        }
     }
 }

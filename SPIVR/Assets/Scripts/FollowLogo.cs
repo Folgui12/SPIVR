@@ -36,7 +36,7 @@ public class FollowLogo : MonoBehaviour
                     Siren.canMove = true;
                 }
             }
-            else
+            else if(Siren != null && Siren.TravelPointsIndexRef < 5)
             {
                 Siren.canMove = false;
                 if(AudioManager.Instance.PublicSource.isPlaying)

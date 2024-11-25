@@ -36,6 +36,5 @@ public class AudioManager : MonoBehaviour
         }
 
         source.PlayOneShot(clip);
-
     }
 }

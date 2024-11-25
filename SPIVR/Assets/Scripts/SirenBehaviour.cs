@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Search;
 using UnityEngine;
 
 public class SirenBehaviour : MonoBehaviour
@@ -7,15 +8,16 @@ public class SirenBehaviour : MonoBehaviour
     [SerializeField] private AudioClip SirenMoving;
     public Transform playerPosition;
     public bool canMove;
-    public bool firstDialog;
     public List<Transform> TravelPoints;  
     public int TravelPointsIndexRef => travelPointsIndex;
-    private int travelPointsIndex;
+    public int travelPointsIndex;
+    private bool reachTable;
 
     // Start is called before the first frame update
     void Start()
     {
         canMove = false;
+        reachTable = false;
     }
     
     // Update is called once per frame
@@ -30,7 +32,7 @@ public class SirenBehaviour : MonoBehaviour
 
             if(!AudioManager.Instance.PublicSource.isPlaying)
             {
-                AudioManager.Instance.PlayOneShot(SirenMoving, .4f);
+                AudioManager.Instance.PlayOneShot(SirenMoving, .2f);
             }
         }
 
@@ -38,14 +40,18 @@ public class SirenBehaviour : MonoBehaviour
         {
             canMove = true;
         }
-
-        if(travelPointsIndex >= TravelPoints.Count)
+        
+        if(travelPointsIndex == 6 && !reachTable)
         {
             canMove = false;
             if(AudioManager.Instance.PublicSource.isPlaying)
             {
                 AudioManager.Instance.PublicSource.Stop();
             }
+
+            reachTable = true;
+
+            SpeakerManger.Instance.IntroWorkArea();
         }
     }
 
