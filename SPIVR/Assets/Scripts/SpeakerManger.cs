@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpeakerManger : MonoBehaviour
 {
     public static SpeakerManger Instance;
+    public AudioSource PublicSource => speaker;
     [SerializeField] private List<AudioClip> Audios;
     private AudioSource speaker;  
     private int audiosIndex;
@@ -12,7 +13,6 @@ public class SpeakerManger : MonoBehaviour
     private bool firstTimePuttingCupInMachine;
     private bool firstTimeUsingCoffeMachine;
     private bool firstCupOffMachine;
-    private bool firsTimeGrabbingJar;
 
     void Awake()
     {
@@ -34,7 +34,6 @@ public class SpeakerManger : MonoBehaviour
         firstTimePuttingCupInMachine = false;
         firstTimeUsingCoffeMachine = false;
         firstCupOffMachine = true;
-        firsTimeGrabbingJar = true;
     }
 
     // Update is called once per frame
@@ -124,6 +123,11 @@ public class SpeakerManger : MonoBehaviour
             PlayNextSound();
             firstTimeUsingCoffeMachine = true;
         }
+    }
+
+    public void CoffeReadyToGrab()
+    {
+        PlayNextSound();
     }
 
     public void GrabCupOfCoffeFromMachine()

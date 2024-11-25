@@ -64,7 +64,6 @@ public class CupDetection : MonoBehaviour
         cupInteractable.enabled = true;
         startProcess = false;
         AudioManager.Instance.PublicSource.Stop();
-        ChangeLights(3);
         StartCoroutine("EndProcess"); 
     }
 
@@ -99,11 +98,20 @@ public class CupDetection : MonoBehaviour
     {
         AudioManager.Instance.PlayOneShot(LiquidPouring);
 
-        yield return new WaitForSeconds(AudioManager.Instance.PublicSource.clip.length);
+        yield return new WaitForSeconds(5f);
+
+        AudioManager.Instance.PublicSource.Stop();
 
         AudioManager.Instance.PlayOneShot(CoffeReady);
 
+        ChangeLights(3);
+
+        SpeakerManger.Instance.CoffeReadyToGrab();
+
+        yield return new WaitForSeconds(SpeakerManger.Instance.PublicSource.clip.length);
+
         ChangeLights(1);
+
         canPlaceCups = true;
         cupFullOfCoffe = true;
     }
@@ -132,7 +140,7 @@ public class CupDetection : MonoBehaviour
         {
             other.GetComponent<HandDetection>().CoffeReadyToClose = true;
             SpeakerManger.Instance.GrabCupOfCoffeFromMachine();
-        }
+        } 
     }
 
 }

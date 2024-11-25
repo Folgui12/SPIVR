@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 236704707516144193}
   - component: {fileID: 3163801313358281963}
   - component: {fileID: 7684026121863319948}
-  - component: {fileID: 2727862643546338795}
   - component: {fileID: 7772017279940107343}
+  - component: {fileID: 2032759653093675691}
   m_Layer: 0
   m_Name: Starbucks_Tapa
   m_TagString: CupTop
@@ -115,28 +115,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &2727862643546338795
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2872983759274201460}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5114384889949126375, guid: e7adad799800375488d56118a7e1d6ca, type: 3}
 --- !u!114 &7772017279940107343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,3 +237,24 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
+--- !u!65 &2032759653093675691
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2872983759274201460}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.09650848, y: 0.024256077, z: 0.09650849}
+  m_Center: {x: -0.0000009536743, y: 0.004230317, z: 0.00017003715}
