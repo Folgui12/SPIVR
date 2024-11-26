@@ -128,6 +128,7 @@ public class CupDetection : MonoBehaviour
                 SpeakerManger.Instance.PlayerPutCupInMachine();
                 AudioManager.Instance.PlayOneShot(CupInMachine);
                 cupInteractable.transform.position = transform.position;
+                //cupInteractable.transform.rotation = transform.rotation;
                 cupInteractable.enabled = false;
                 canPlaceCups = false;
             }

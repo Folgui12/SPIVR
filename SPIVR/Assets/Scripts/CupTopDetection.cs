@@ -17,10 +17,12 @@ public class CupTopDetection : MonoBehaviour
             if (!cupOnHand.OnHand)
             {
                 AudioManager.Instance.PlayOneShot(LidClose);
-                other.transform.parent = transform;
+                //other.transform.parent = transform;
                 other.transform.position = transform.position;
+                other.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
+                other.gameObject.GetComponent<Collider>().enabled = false;
 
-                if(transform.GetComponentInParent<HandDetection>().CoffeReadyToClose)
+                if (transform.GetComponentInParent<HandDetection>().CoffeReadyToClose)
                 {
                     SpeakerManger.Instance.CoffeReady();
                 }

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Search;
 using UnityEngine;
 
 public class SirenBehaviour : MonoBehaviour
@@ -28,7 +27,7 @@ public class SirenBehaviour : MonoBehaviour
             if(transform.position == TravelPoints[travelPointsIndex].position)
                 travelPointsIndex++;
             else
-                transform.position = Vector3.MoveTowards(transform.position, TravelPoints[travelPointsIndex].position, 0.03f);
+                transform.position = Vector3.MoveTowards(transform.position, TravelPoints[travelPointsIndex].position, 0.009f);
 
             if(!AudioManager.Instance.PublicSource.isPlaying)
             {
